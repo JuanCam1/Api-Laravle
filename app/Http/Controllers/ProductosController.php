@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Controller;
 use App\Models\Producto;
 
 
@@ -35,6 +35,9 @@ class ProductosController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
+            'marca' => 'required|max:255',
+            'precio' => 'required|max:255',
+            'id_cat' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -48,11 +51,14 @@ class ProductosController extends Controller
 
         $producto = Producto::create([
             'name' => $request->name,
+            'marca'=>$request->marca,
+            'precio'=>$request->precio,
+            'id_cat'=>$request->id_cat
         ]);
 
         if (!$producto) {
             $data = [
-                'message' => 'Error al crear el estudiante',
+                'message' => 'Error al crear el producto',
                 'status' => 500
             ];
             return response()->json($data, 500);
@@ -161,6 +167,9 @@ class ProductosController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'max:255',
+            'marca' => 'max:255',
+            'precio' => 'max:255',
+            'id_cat' => 'max:50',
         ]);
 
         if ($validator->fails()) {
@@ -174,6 +183,18 @@ class ProductosController extends Controller
 
         if ($request->has('name')) {
             $producto->name = $request->name;
+        }
+
+        if ($request->has('marca')) {
+            $producto->marca = $request->marca;
+        }
+
+        if ($request->has('precio')) {
+            $producto->precio = $request->precio;
+        }
+
+        if ($request->has('id_cat')) {
+            $producto->id_cat = $request->id_cat;
         }
 
         $producto->save();

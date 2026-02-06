@@ -51,7 +51,7 @@ class CategoriaController extends Controller
 
         if (!$categoria) {
             $data = [
-                'message' => 'Error al crear el estudiante',
+                'message' => 'Error al crear la categoria',
                 'status' => 500
             ];
             return response()->json($data, 500);

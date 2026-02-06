@@ -12,9 +12,9 @@ class ProductosController extends Controller
 {
     public function index()
     {
-        $producto = Producto::all();
+        $productos = Producto::with(['categoria:id_cat,name'])->get();
 
-        if ($producto->isEmpty()) {
+        if ($productos->isEmpty()) {
             $data = [
                 'message' => 'No se encontraron productos',
                 'status' => 200
@@ -22,12 +22,10 @@ class ProductosController extends Controller
             return response()->json($data, 404);
         }
 
-        $data = [
-            'producto' => $producto,
-            'status' => 200
-        ];
-
-        return response()->json($data, 200);
+        return response()->json([
+        'productos' => $productos,
+        'status' => 200
+    ], 200);
     }
 
     public function store(Request $request)
@@ -75,7 +73,7 @@ class ProductosController extends Controller
 
     public function show($id)
     {
-        $producto = Producto::find($id);
+        $producto = Producto::with('categoria:id_cat,name')->find($id);
 
         if (!$producto) {
             $data = [

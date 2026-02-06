@@ -16,6 +16,8 @@ Route::patch('/categoria/{id}', [CategoriaController::class, 'updatePartial']);
 
 Route::delete('/categoria/{id}', [CategoriaController::class, 'destroy']);
 
+Route::get('/categoria/{id}/productos', [CategoriaController::class, 'productosPorCategoria']);
+
 
 Route::get('/producto', [ProductosController::class,'index']);
 

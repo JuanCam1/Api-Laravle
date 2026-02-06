@@ -10,7 +10,7 @@ class Producto extends Model
     protected $table = 'producto';
 
     public function categoria () {
-        $this->belongsTo(Categoria::class,'id_cat','id_cat');
+        return $this->belongsTo(Categoria::class,'id_cat','id_cat');
     }
 
     protected $fillable = [

@@ -185,4 +185,23 @@ class CategoriaController extends Controller
 
         return response()->json($data, 200);
     }
+
+
+    public function productosPorCategoria($id) {
+        $categoria = Categoria::with('getProductos')->find($id);
+
+        if(!$categoria){
+            return response() -> json([
+                'message' => 'Categoria no encontrada',
+                'status' => 404
+            ],404);
+        }
+
+         return response()->json([
+        'categoria' => $categoria->name,
+        'productos' => $categoria->getProductos,
+        'status' => 200
+    ], 200);
+    }
+
 }
